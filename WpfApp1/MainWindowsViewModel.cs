@@ -43,7 +43,7 @@ namespace WpfApp1
             }
         }
 
-        public string OutputString
+        public string OutputNanoString
         {
             get
             {
@@ -51,54 +51,99 @@ namespace WpfApp1
             }
             set
             {
-                OnPropertyChanged("OutputString");
+                OnPropertyChanged("OutputNanoString");
                 m_outputstring_location = value;
-
-
             }
         }
 
+        public string OutputAxString
+        {
+            get
+            {
+                return m_output_ax_string;
+            }
+            set
+            {
+                OnPropertyChanged("OutputAxString");
+                m_output_ax_string = value;
+            }
+        }
+        public string OutputAyString
+        {
+            get
+            {
+                return m_output_ay_string;
+            }
+            set
+            {
+                OnPropertyChanged("OutputAyString");
+                m_output_ay_string = value;
+            }
+        }
+        public string OutputAzString
+        {
+            get
+            {
+                return m_output_az_string;
+            }
+            set
+            {
+                OnPropertyChanged("OutputAzString");
+                m_output_az_string = value;
+            }
+        }
+        
 
         #region Members
 
         private string m_crazy_string;
         private Random m_random;
         private string m_file_location;
+        private string m_output_ax_string;
+        private string m_output_ay_string;
+        private string m_output_az_string;
         private string m_outputstring_location;
+        private Int64 i = 0;
+        private Int64 current_time;
+        private Int64 end_time;
+        private Boolean Setup = false;
+
 
         #endregion
 
-
-
-
+        //create new realtime data store manager
+        FileDataStoreManager file_ds_manager = new FileDataStoreManager();
+        List<OxTS.NavLib.Common.Measurement.MeasurementItem> measurements = new List<OxTS.NavLib.Common.Measurement.MeasurementItem>();
+        List<IStreamItem> streams;
         public void UpdateString()
         {
             CrazyString = String.Format("well done sir!! heres a random no: " + m_random.Next());
         }
 
-        public void OpenFile()
+        public void OpenFilePlusSetup()
         {
-            //create new realtime data store manager
-            FileDataStoreManager file_ds_manager = new FileDataStoreManager();
-
-            file_ds_manager.AddFile(FileEntryString);
-           
-            //increment of 100000000ns, gives us 1Hz
-            file_ds_manager.DecodeData(file_ds_manager.GetStoreStartTime(), file_ds_manager.GetStoreEndTime(), 100000000);
-
-
-            //Get all available streams in the data store
-            List<IStreamItem> streams = file_ds_manager.GetAllStreamItems();
-
-            //For each stream in datastore
-            foreach (IStreamItem stream in streams)
+            if (Setup == false)
             {
-                //System.Console.Clear();
-                //Output stream information
-
-                    FileEntryString = String.Format("File name: " + stream.Address +"\n");
                 
-                    FileEntryString += String.Format("Resource ID: " + stream.ResourceId +"\n");
+
+                file_ds_manager.AddFile(FileEntryString);
+
+                //increment of 100000000ns, gives us 1Hz
+                file_ds_manager.DecodeData(file_ds_manager.GetStoreStartTime(), file_ds_manager.GetStoreEndTime(), 100000000);
+
+
+                //Get all available streams in the data store
+                streams = file_ds_manager.GetAllStreamItems();
+
+                //For each stream in datastore
+                foreach (IStreamItem stream in streams)
+                {
+                    //System.Console.Clear();
+                    //Output stream information
+
+                    FileEntryString = String.Format("File name: " + stream.Address + "\n");
+
+                    FileEntryString += String.Format("Resource ID: " + stream.ResourceId + "\n");
                     FileEntryString += String.Format("Stream ID: " + stream.StreamId + "\n");
                     FileEntryString += String.Format("Stream Name: " + stream.StreamName + "\n");
                     FileEntryString += String.Format("Transport Name: " + stream.TransportName + "\n");
@@ -107,47 +152,59 @@ namespace WpfApp1
                     FileEntryString += String.Format("Device Serial number: " + stream.DeviceSerialNumber + "\n");
 
 
-                //FileEntryString = String.Format("");
-                //FileEntryString = String.Format("End of Stream Data");
-                //FileEntryString = String.Format("Press Enter key for next stream...");
-                //FileEntryString = String.Format("");
-            }
-
-            //No need to configure measurements or decode when using direct but we still need the list of measurements with stream id
-            List<OxTS.NavLib.Common.Measurement.MeasurementItem> measurements = new List<OxTS.NavLib.Common.Measurement.MeasurementItem>();
-            measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Nano"));
-            measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Ax"));
-            measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Ay"));
-            measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Az"));
-
-
-            Int64 current_time = file_ds_manager.GetStoreStartTime();
-            Int64 end_time = file_ds_manager.GetStoreEndTime();
-            Int64 One_Second = 1000000000;
-
-            //Tell the data store to seek to the correct position
-            file_ds_manager.BeginDirectDecode(current_time);
-
-            //For each stream in datastore
-            while (current_time < end_time)
-            {
-                List<MeasurementValue> meas_data = file_ds_manager.GetDirectStreamDataForInstant(current_time, streams[0].StreamId, measurements);
-
-                foreach (MeasurementValue data in meas_data)
-                {
-                    OutputString += String.Format(data.MeasurementName + " : " + data.ValueString + "\n");
+                    //FileEntryString = String.Format("");
+                    //FileEntryString = String.Format("End of Stream Data");
+                    //FileEntryString = String.Format("Press Enter key for next stream...");
+                    //FileEntryString = String.Format("");
                 }
 
-                current_time += One_Second;
+                //No need to configure measurements or decode when using direct but we still need the list of measurements with stream id
                 
-            }
+                measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Nano"));
+                measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Ax"));
+                measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Ay"));
+                measurements.Add(new OxTS.NavLib.Common.Measurement.MeasurementItem("Az"));
 
-            //close handles to stream data
-            file_ds_manager.EndDirectDecode();
+
+                current_time = file_ds_manager.GetStoreStartTime();
+                end_time = file_ds_manager.GetStoreEndTime();
+                Int64 One_Second = 1000000;
+                Setup = true;
+            }
+            else
+            {
+                //Tell the data store to seek to the correct position
+                file_ds_manager.BeginDirectDecode(current_time);
+                //current_time = current_time + i * 5 * 1000000;
+                Int32 k = 0;
+                //For each stream in datastore
+                while (k < 5)
+                {
+
+                    List<MeasurementValue> meas_data = file_ds_manager.GetDirectStreamDataForInstant(current_time, streams[0].StreamId, measurements);
+                    OutputNanoString = String.Format(meas_data.Find(a => a.MeasurementName == "Nano").ValueString);
+                    OutputAxString = String.Format(meas_data.Find(a => a.MeasurementName == "Ax").ValueString);
+                    OutputAyString = String.Format(meas_data.Find(a => a.MeasurementName == "Ay").ValueString);
+                    OutputAzString = String.Format(meas_data.Find(a => a.MeasurementName == "Az").ValueString);
+                    //foreach (MeasurementValue data in meas_data)
+                    //{
+                    //    OutputNanoString += String.Format(data.MeasurementName + " : " + data.ValueString + "\n");
+                        
+                    //}
+                    //OutputNanoString += String.Format(current_time + "\n" + end_time + "\n");
+                    current_time = current_time + 10000000;
+                    k++;
+                }
+                i++;
+
+                //close handles to stream data
+                file_ds_manager.EndDirectDecode();
+
+            }
         }
         //FileEntryString = "Well Done you did something";
-    }
 
+    }
 
     //    //create new realtime data store manager
     //    FileDataStoreManager file_ds_manager = new FileDataStoreManager();

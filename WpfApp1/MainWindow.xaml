@@ -11,20 +11,27 @@
     <Window.DataContext>
         <local:MainWindowsViewModel></local:MainWindowsViewModel>
     </Window.DataContext>
-    <Grid>
+    <Grid Background="#FFB4B4B4">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="131*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="59*"/>
+            <RowDefinition Height="62*"/>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="495*"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="243*"/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="162*"/>
+            <ColumnDefinition Width="208*"/>
+            <ColumnDefinition Width="207*"/>
+            <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="WimpyTextBox" Background="White" Text="NAVsdk WPF GUI Application" FontSize="70" FontFamily="Calibri" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"></TextBlock>
+        <TextBlock x:Name="WimpyTextBox" Background="#FFB4B4B4" Text="NAVsdk WPF GUI Application" FontSize="70" FontFamily="Calibri" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Bottom" Height="85" Foreground="#FFEC0C0C" Grid.RowSpan="1"></TextBlock>
         <!--<Button x:Name="AssholeButton" 
                 Content="click this foool!!" 
                 Grid.Row="1" 
@@ -36,16 +43,26 @@
             </wi:Interaction.Triggers>
         </Button>-->
 
-        <Button x:Name="Select" Content="Open File PLEASE" Grid.Column="0" Grid.Row="2" >
+        <Button x:Name="Select" Content="Open File PLEASE" Grid.Column="1" Grid.Row="5" Grid.RowSpan="1
+                " >
             <wi:Interaction.Triggers>
                 <wi:EventTrigger EventName="Click">
-                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="OpenFile"></ei:CallMethodAction>
+                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="OpenFilePlusSetup"></ei:CallMethodAction>
                 </wi:EventTrigger>
             </wi:Interaction.Triggers>
         </Button>
-        <TextBox x:Name="FileTextBox" Grid.Column="0" Text="{Binding FileEntryString}" Grid.Row="1" Grid.ColumnSpan="2"  />
-        <TextBox x:Name="OutputTextBox" Grid.Column="2" Text="{Binding OutputString}" Grid.Row="1" Grid.ColumnSpan="2"  />
-
+        <TextBox x:Name="FileTextBox" Grid.Column="1" Text="{Binding FileEntryString}" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" TextWrapping="Wrap"  />
+        <TextBox x:Name="OutputNanoBox" Grid.Column="4" Text="{Binding OutputNanoString}" Grid.Row="2" />
+        <TextBox x:Name="OutputAxBox" Grid.Column="4" Text="{Binding OutputAxString}" Grid.Row="3" />
+        <TextBox x:Name="OutputAyBox" Grid.Column="4" Text="{Binding OutputAyString}" Grid.Row="4" />
+        <TextBox x:Name="OutputAzBox" Grid.Column="4" Text="{Binding OutputAzString}" Grid.Row="5" />
+        <Label Content="Enter File Location here:" HorizontalAlignment="Left"  Grid.Row="2" VerticalAlignment="Bottom" Height="45" Width="238" FontSize="20" Grid.Column="1" />
+        <Label Content="Nano" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Bottom" FontSize="18" Height="34" Width="53" />
+        <Label Content="Ax" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Bottom" FontSize="18" Height="34" Width="30" />
+        <Label Content="Ay" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" FontSize="18" Height="34
+               " Width="30"/>
+        <Label Content="Az" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Bottom" FontSize="18" Height="34" Width="30" />
+        <Border BorderBrush="Red" BorderThickness="0,5,0,0" Grid.ColumnSpan="6" HorizontalAlignment="Left" Height="10" Margin="0" Grid.Row="1" VerticalAlignment="Top" Width="864" Grid.Column="1" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>
