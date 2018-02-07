@@ -43,6 +43,20 @@ namespace WpfApp1
             }
         }
 
+        public string OutputString
+        {
+            get
+            {
+                return m_outputstring_location;
+            }
+            set
+            {
+                OnPropertyChanged("OutputString");
+                m_outputstring_location = value;
+
+
+            }
+        }
 
 
         #region Members
@@ -50,6 +64,7 @@ namespace WpfApp1
         private string m_crazy_string;
         private Random m_random;
         private string m_file_location;
+        private string m_outputstring_location;
 
         #endregion
 
@@ -120,18 +135,19 @@ namespace WpfApp1
 
                 foreach (MeasurementValue data in meas_data)
                 {
-                    FileEntryString += String.Format( data.MeasurementName + " : " + data.ValueString + "\n");
+                    OutputString += String.Format(data.MeasurementName + " : " + data.ValueString + "\n");
                 }
 
                 current_time += One_Second;
+                
             }
 
             //close handles to stream data
             file_ds_manager.EndDirectDecode();
         }
         //FileEntryString = "Well Done you did something";
-
     }
+
 
     //    //create new realtime data store manager
     //    FileDataStoreManager file_ds_manager = new FileDataStoreManager();
