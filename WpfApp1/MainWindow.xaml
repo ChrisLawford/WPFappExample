@@ -7,20 +7,20 @@
         xmlns:wi="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="727" Width="997">
+        Title="MainWindow" Height="371.5" Width="943">
     <Window.DataContext>
         <local:MainWindowsViewModel></local:MainWindowsViewModel>
     </Window.DataContext>
     <Grid Background="#FFB4B4B4"  >
         <Grid.RowDefinitions>
-            <RowDefinition Height="178*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="56*"/>
-            <RowDefinition Height="54*"/>
+            <RowDefinition Height="92*"/>
+            <RowDefinition Height="0*"/>
             <RowDefinition Height="55*"/>
-            <RowDefinition Height="58*"/>
-            <RowDefinition Height="41*"/>
-            <RowDefinition Height="214"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="36*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="26"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
@@ -30,7 +30,8 @@
             <ColumnDefinition Width="336*"/>
             <ColumnDefinition Width="117*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="WimpyTextBox" Background="#FFB4B4B4" Text="NAVsdk WPF GUI Application" FontSize="70" FontFamily="Calibri" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Bottom" Height="85" Foreground="#FFEC0C0C" Grid.RowSpan="1"/>
+        <TextBlock x:Name="WimpyTextBox" Background="#FFB4B4B4" Text="NAVsdk WPF GUI Application" FontSize="60" FontFamily="Calibri" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4
+                   " VerticalAlignment="Bottom" Height="85" Foreground="#FFEC0C0C" Grid.RowSpan="1" HorizontalAlignment="Center" Padding="50,0" FontStretch="Condensed"/>
         <!--<Button x:Name="AssholeButton" 
                 Content="click this foool!!" 
                 Grid.Row="1" 
@@ -50,7 +51,7 @@
                 </wi:EventTrigger>
             </wi:Interaction.Triggers>
         </Button>
-        <TextBox x:Name="FileTextBox" Grid.Column="1" Text="{Binding FileEntryString}" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" TextWrapping="Wrap"  />
+        <TextBox x:Name="FileTextBox" Grid.Column="1" Text="{Binding FileEntryString}" Grid.Row="3" Grid.ColumnSpan="1" TextWrapping="Wrap" Margin="0,0,0,5" Grid.RowSpan="2"  />
         <TextBox x:Name="OutputNanoBox" Grid.Column="4" Text="{Binding OutputNanoString}" Grid.Row="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" FontSize="16" Margin="0,0,1,0"  />
         <TextBox x:Name="OutputAxBox" Grid.Column="4" Text="{Binding OutputAxString}" Grid.Row="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" FontSize="16" Margin="0,0,1,0" />
         <TextBox x:Name="OutputAyBox" Grid.Column="4" Text="{Binding OutputAyString}" Grid.Row="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" FontSize="16" Margin="0,0,1,0" />
@@ -58,11 +59,11 @@
         <Label Content="Enter File Location here:"  Grid.Row="2"  FontSize="20" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" />
         <Label Content="Nano" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Bottom" FontSize="18" Height="34" Width="53" />
         <Label Content="Ax" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" FontSize="18" Height="34" Width="30" />
-        <Label Content="Ay" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Bottom" FontSize="18" Height="34
-               " Width="30"/>
+        <Label Content="Ay" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" FontSize="18" Height="34
+               " Width="30" Grid.RowSpan="2"/>
         <Label Content="Az" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="6" VerticalAlignment="Bottom" FontSize="18" Height="34" Width="30" />
         <Label Content="Measurements at 0.05s increments:" Grid.Column="3" Grid.Row="2" FontSize="20" VerticalContentAlignment="Center" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" FontWeight="Bold" />
-        <Border BorderBrush="Red" BorderThickness="0,5,0,0" Grid.ColumnSpan="5" HorizontalAlignment="Left" Height="10" Margin="0" Grid.Row="1" VerticalAlignment="Top" Width="864" Grid.Column="1"/>
+        <Border BorderBrush="Red" BorderThickness="0,5,0,0" Grid.ColumnSpan="4"  Height="10"  Grid.Row="1" VerticalAlignment="Top"  Grid.Column="1" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>
