@@ -14,81 +14,20 @@ namespace WpfApp1
 
         public MainWindowsViewModel()
         {
-            m_random = new Random();
         }
 
-        public string CrazyString
-        {
-            get
-            {
-                return m_crazy_string;
-            }
-            set
-            {
-                OnPropertyChanged("CrazyString");
-                m_crazy_string = value;
-            }
-        }
+        #region Properties
 
-        public string FileEntryString
-        {
-            get{return m_file_location;}set{OnPropertyChanged("FileEntryString");m_file_location = value;}}
+        public string FileEntryString  {get{    return m_file_location;}        set{    OnPropertyChanged("FileEntryString");   m_file_location         = value;}}
+        public string OutputNanoString {get{    return m_outputstring_location;}set{    OnPropertyChanged("OutputNanoString");  m_outputstring_location = value;}}
+        public string OutputAxString   {get{    return m_output_ax_string;}     set{    OnPropertyChanged("OutputAxString");    m_output_ax_string      = value;}}
+        public string OutputAyString   {get{    return m_output_ay_string;}     set{    OnPropertyChanged("OutputAyString");    m_output_ay_string      = value;}}
+        public string OutputAzString   {get{    return m_output_az_string;}     set{    OnPropertyChanged("OutputAzString");    m_output_az_string      = value;}}
 
-        public string OutputNanoString
-        {
-            get
-            {
-                return m_outputstring_location;
-            }
-            set
-            {
-                OnPropertyChanged("OutputNanoString");
-                m_outputstring_location = value;
-            }
-        }
-
-        public string OutputAxString
-        {
-            get
-            {
-                return m_output_ax_string;
-            }
-            set
-            {
-                OnPropertyChanged("OutputAxString");
-                m_output_ax_string = value;
-            }
-        }
-        public string OutputAyString
-        {
-            get
-            {
-                return m_output_ay_string;
-            }
-            set
-            {
-                OnPropertyChanged("OutputAyString");
-                m_output_ay_string = value;
-            }
-        }
-        public string OutputAzString
-        {
-            get
-            {
-                return m_output_az_string;
-            }
-            set
-            {
-                OnPropertyChanged("OutputAzString");
-                m_output_az_string = value;
-            }
-        }
-        
+        #endregion
 
         #region Members
 
-        private string m_crazy_string;
-        private Random m_random;
         private string m_file_location;
         private string m_output_ax_string;
         private string m_output_ay_string;
@@ -104,19 +43,15 @@ namespace WpfApp1
 
         //create new realtime data store manager
         FileDataStoreManager file_ds_manager = new FileDataStoreManager();
+        //Create measurements list
         List<OxTS.NavLib.Common.Measurement.MeasurementItem> measurements = new List<OxTS.NavLib.Common.Measurement.MeasurementItem>();
         List<IStreamItem> streams;
-        public void UpdateString()
-        {
-            CrazyString = String.Format("well done sir!! heres a random no: " + m_random.Next());
-        }
 
         public void OpenFilePlusSetup()
         {
             if (Setup == false)
             {
-                
-
+                //Add the file to the datastoremanager
                 file_ds_manager.AddFile(FileEntryString);
 
                 //increment of 100000000ns, gives us 1Hz
@@ -132,7 +67,6 @@ namespace WpfApp1
                     //Output stream information
 
                     FileEntryString = String.Format("File name: " + stream.Address + "\n");
-
                     FileEntryString += String.Format("Resource ID: " + stream.ResourceId + "\n");
                     FileEntryString += String.Format("Stream ID: " + stream.StreamId + "\n");
                     FileEntryString += String.Format("Stream Name: " + stream.StreamName + "\n");
@@ -153,16 +87,17 @@ namespace WpfApp1
 
                 current_time = file_ds_manager.GetStoreStartTime();
                 end_time = file_ds_manager.GetStoreEndTime();
-                Int64 One_Second = 1000000;
+
                 //Make sure not to enter this section again
                 Setup = true;
+                OpenFilePlusSetup();
             }
             else
             {
                 //Tell the data store to seek to the correct position
                 file_ds_manager.BeginDirectDecode(current_time);
                 Int32 k = 0;
-                //For each stream in datastore
+                //Counts through the data fo 0.05s
                 while (k < 5)
                 {
 
@@ -175,18 +110,12 @@ namespace WpfApp1
                     current_time = current_time + 10000000;
                     k++;
                 }
+
                 i++;
 
                 //close handles to stream data
                 file_ds_manager.EndDirectDecode();
-
             }
         }
-        //FileEntryString = "Well Done you did something";
-
-    }
-
-
-        
-    
+    } 
 }

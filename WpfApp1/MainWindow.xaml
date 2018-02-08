@@ -32,17 +32,6 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="WimpyTextBox" Background="#FFB4B4B4" Text="NAVsdk WPF GUI Application" FontSize="60" FontFamily="Calibri" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4
                    " VerticalAlignment="Bottom" Height="85" Foreground="#FFEC0C0C" Grid.RowSpan="1" HorizontalAlignment="Center" Padding="50,0" FontStretch="Condensed"/>
-        <!--<Button x:Name="AssholeButton" 
-                Content="click this foool!!" 
-                Grid.Row="1" 
-                Grid.Column="0">
-            <wi:Interaction.Triggers>
-                <wi:EventTrigger EventName="Click">
-                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="UpdateString"></ei:CallMethodAction>
-                </wi:EventTrigger>
-            </wi:Interaction.Triggers>
-        </Button>-->
-
         <Button x:Name="Select" Content="Open File and click for next increment" Grid.Column="1" Grid.Row="5" Grid.RowSpan="1
                 " >
             <wi:Interaction.Triggers>
